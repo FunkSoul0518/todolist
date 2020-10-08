@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+  <title>Document</title>
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+    crossorigin="anonymous"
+  >
+  <link
+    rel="stylesheet"
+    href="all.css"
+  >
+</head>
+
+<body>
+  <div id="app">
+    <div class="container d-flex flex-column">
+      <div class="row justify-content-center">
+        <div class="col-6 d-flex justify-content-center flex-column">
+          <h1 class="title text-center my-4 text-light">Todo List (vue version)</h1>
+          <label
+            for="todo"
+            class="font-weight-bold"
+          >加入代辦事項</label>
+          <input
+            type="text"
+            id="todo"
+            placeholder="Enter"
+            v-model="todo"
+            @keyup.enter="addTodo"
+          >
+          <ul class="task-count my-4">
+            <li class="action ">
+              <a
+                class="text-light"
+                :class="{active:visibility == 'all'}"
+                @click.prevent="visibility = 'all'"
+                href="#"
+              >所有事項</a>
+              <a
+                class="text-light"
+                :class="{active:visibility==='unCompleted'}"
+                @click.prevent="visibility = 'unCompleted'"
+                href="#"
+              >未完成</a>
+              <a
+                class="text-light"
+                :class="{active:visibility==='completed'}"
+                href="#"
+                @click.prevent="visibility = 'completed'"
+              >已完成</a>
+            </li>
+          </ul>
+
+          <div class="tasks">
+
+            <span
+              class="no-task-tip"
+              v-show="!list.length"
+            >尚未加入</span>
+            <ul
+              class="todo-list"
+              v-show="list.length"
+            >
+              <li
+                class="todo mb-0"
+                v-for="item in filterList"
+                :class="{completed:item.isComplete,editing:item===editTodo}"
+              >
+                <div class="view">
+                  <input
+                    class="toggle"
+                    type="checkbox"
+                    v-model="item.isComplete"
+                  />
+                  <label @dblclick="edit(item)">{{item.title}}
+                  </label>
+                  <button
+                    class="destroy"
+                    @click="deleteTodo(item)"
+                  ></button>
+                </div>
+                <input
+                  class="edit"
+                  type="text"
+                  v-model="item.title"
+                  @blur="editFinish(item)"
+                  @keyup.enter="editFinish(item)"
+                  @keyup.esc="cancelEdit(item)"
+                />
+              </li>
+            </ul>
+          </div>
+
+
+
+
+        </div>
+      </div>
+
+      <div
+        id="clockdiv"
+        class="mt-5"
+      >
+        <div> <span class="days"></span>
+          <div class="smalltext">Days</div>
+        </div>
+        <div> <span class="hours"></span>
+          <div class="smalltext">Hours</div>
+        </div>
+        <div> <span class="minutes"></span>
+          <div class="smalltext">Minutes</div>
+        </div>
+        <div> <span class="seconds"></span>
+          <div class="smalltext">Seconds</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+
+
+
+
+
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.12/vue.js'></script>
+  <script src="./main.js"></script>
+</body>
+
+</html>
